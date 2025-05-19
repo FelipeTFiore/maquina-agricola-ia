@@ -1,0 +1,44 @@
+
+
+#include <DHT.h>
+#include <Adafruit_Sensor.h>
+#define DHTPIN 13           
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
+
+
+const int botaoFosforo = 4;   
+const int botaoPotassio = 5;  
+const int ldrPH = 34;         
+const int releBomba = 12;     
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(botaoFosforo, INPUT_PULLUP);
+  pinMode(botaoPotassio, INPUT_PULLUP);
+  pinMode(releBomba, OUTPUT);
+  dht.begin();
+  Serial.println("Sistema iniciado!");
+}
+
+void loop() {
+  float umidade = dht.readHumidity();
+  int fosforo = digitalRead(botaoFosforo);
+  int potassio = digitalRead(botaoPotassio);
+  int valorLDR = analogRead(ldrPH);
+  float pH = map(valorLDR, 0, 4095, 0, 140) / 10.0;
+
+  Serial.print("Umidade: "); Serial.print(umidade); Serial.print("% | ");
+  Serial.print("Fósforo: "); Serial.print(fosforo ? "Ausente" : "Presente"); Serial.print(" | ");
+  Serial.print("Potássio: "); Serial.print(potassio ? "Ausente" : "Presente"); Serial.print(" | ");
+  Serial.print("pH: "); Serial.println(pH);
+
+  if (umidade < 30 && pH > 6.0) {
+    digitalWrite(releBomba, HIGH);
+    Serial.println("Irrigação ATIVADA");
+  } else {
+    digitalWrite(releBomba, LOW);
+  }
+  delay(2000);
+}
