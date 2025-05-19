@@ -30,8 +30,8 @@ pH (LDR)	GPIO34	LDR + resistor 10kΩ
 Fósforo	GPIO4	Botão digital
 Potássio	GPIO5	Botão digital
 Bomba (Relé)	GPIO12	Módulo Relé
-💻 Código Comentado
-📜 ESP32/main.cpp
+ Código Comentado
+ ESP32/main.cpp
 cpp
 #include <DHT.h>  
 #define DHTPIN 13          // Pino do DHT22  
@@ -58,7 +58,7 @@ void loop() {
   }  
   delay(2000);  
 }  
-🐍 Python/database.py
+ Python/database.py
 python
 import sqlite3  
 from datetime import datetime  
@@ -83,7 +83,7 @@ VALUES (?, ?, ?)''', (datetime.now(), 45.0, 6.8))
 
 conn.commit()  
 print("Dados salvos!")  
-📊 Banco de Dados
+ Banco de Dados
 Estrutura da Tabela
 Coluna	Tipo	Descrição
 id	INTEGER	Chave primária
@@ -95,7 +95,7 @@ Create: INSERT INTO leituras (data, umidade) VALUES (...)
 
 Read: SELECT * FROM leituras WHERE umidade < 30
 
-🚀 Como Executar
+ Como Executar
 Simule o hardware:
 
 Acesse o projeto no Wokwi e clique em "Play".
